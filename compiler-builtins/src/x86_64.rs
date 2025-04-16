@@ -8,7 +8,8 @@ use core::intrinsics;
 // NOTE These functions are never mangled as they are not tested against compiler-rt
 
 intrinsics! {
-    #[unsafe(naked)]
+    #[cfg_attr(bootstrap, naked)]
+    #[cfg_attr(not(bootstrap), unsafe(naked))]
     #[cfg(all(
         any(
             all(windows, target_env = "gnu"),

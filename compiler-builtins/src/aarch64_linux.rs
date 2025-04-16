@@ -131,7 +131,8 @@ macro_rules! compare_and_swap {
     ($ordering:ident, $bytes:tt, $name:ident) => {
         intrinsics! {
             #[maybe_use_optimized_c_shim]
-            #[unsafe(naked)]
+            #[cfg_attr(bootstrap, naked)]
+            #[cfg_attr(not(bootstrap), unsafe(naked))]
             pub unsafe extern "C" fn $name (
                 expected: int_ty!($bytes), desired: int_ty!($bytes), ptr: *mut int_ty!($bytes)
             ) -> int_ty!($bytes) {
@@ -161,7 +162,8 @@ macro_rules! compare_and_swap_i128 {
     ($ordering:ident, $name:ident) => {
         intrinsics! {
             #[maybe_use_optimized_c_shim]
-            #[unsafe(naked)]
+            #[cfg_attr(bootstrap, naked)]
+            #[cfg_attr(not(bootstrap), unsafe(naked))]
             pub unsafe extern "C" fn $name (
                 expected: i128, desired: i128, ptr: *mut i128
             ) -> i128 {
@@ -190,7 +192,8 @@ macro_rules! swap {
     ($ordering:ident, $bytes:tt, $name:ident) => {
         intrinsics! {
             #[maybe_use_optimized_c_shim]
-            #[unsafe(naked)]
+            #[cfg_attr(bootstrap, naked)]
+            #[cfg_attr(not(bootstrap), unsafe(naked))]
             pub unsafe extern "C" fn $name (
                 left: int_ty!($bytes), right_ptr: *mut int_ty!($bytes)
             ) -> int_ty!($bytes) {
@@ -215,7 +218,8 @@ macro_rules! fetch_op {
     ($ordering:ident, $bytes:tt, $name:ident, $op:literal) => {
         intrinsics! {
             #[maybe_use_optimized_c_shim]
-            #[unsafe(naked)]
+            #[cfg_attr(bootstrap, naked)]
+            #[cfg_attr(not(bootstrap), unsafe(naked))]
             pub unsafe extern "C" fn $name (
                 val: int_ty!($bytes), ptr: *mut int_ty!($bytes)
             ) -> int_ty!($bytes) {
